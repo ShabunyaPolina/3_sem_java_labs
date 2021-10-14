@@ -1,38 +1,32 @@
 // Shabunya Polina lab 2 var 3
 
+import java.util.*;
+
 public class StrService {
     public static void main(String[] args)
             throws Exception {
-        if(args.length != 1)
-            throw new Exception("Invalid number of command line arguments.");
         String str = args[0];
-        System.out.println(removeZeros(str));
+        System.out.println("Initial string: " + str);
+        System.out.println("Final string: " + removeZeros(str));
     }
 
     static String removeZeros(String str) {
+        String[] digits = str.split("\\D+");
+        System.out.println("/* Digits: " + Arrays.toString(digits) + " */");
         StringBuilder strBuilder = new StringBuilder(str);
-        boolean isGroup = false;
-        int newStringLength = str.length();
-        for(int i = 0; i < newStringLength; ++i) {
-                if (strBuilder.charAt(i) == 48 && newStringLength != 1) {  // srt[i] = '0'
-                    if(isGroup) {
-                        strBuilder.deleteCharAt(i--);
-                        --newStringLength;
-                    }
-                    if (!isGroup) {
-                        if ((i == 0 ||
-                                i != newStringLength - 1 &&
-                                        (strBuilder.charAt(i - 1) < 46 || strBuilder.charAt(i - 1) > 57))
-                                && strBuilder.charAt(i + 1) > 47 && strBuilder.charAt(i + 1) < 58) {
-                            isGroup = true;
-                            strBuilder.deleteCharAt(i--);
-                            --newStringLength;
+        int index = 0;
+        int fromIndex = -1;
+        for (String i : digits) {
+            if (i.length() != 1) {
+                index = strBuilder.indexOf(i, fromIndex + 1);
+                fromIndex = index;
+                if (index == 0 || strBuilder.codePointBefore(index) != '.') {
+                    while (index != strBuilder.length() &&
+                            strBuilder.charAt(index) == '0') {
+                        strBuilder.deleteCharAt(index);
                     }
                 }
             }
-                else {
-                    isGroup = false;
-                }
         }
         str = strBuilder.toString();
         return str;
@@ -45,4 +39,5 @@ public class StrService {
 // str = ".0089y"  newStr = ".0089y"
 // str = "100"  newStr = "100"
 // str = "ll00"  newStr = "ll"
-// str = ".09j.00h_00_h080uh07kk00000jl.00"  newStr = ".09j.00h__h80uh7kkjl.00"
+/* str = ".00.09j.00h_00_00h080u0h07kk00000jl.00jk09k0"
+ * newStr = ".00.09j.00h__h80u0h7kkjl.00jk9k0" */
