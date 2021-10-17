@@ -1,16 +1,20 @@
 package lab.action;
 
 import lab.entity.Matrix;
+import lab.exception.MatrixException;
 
 public class Inverter {
-    public Matrix invertMatrix(Matrix matrix) {
+    public Matrix invertMatrix(Matrix matrix) throws MatrixException {
         int n = matrix.getVerticalSize();
-        Decomposer decomp = new Decomposer();
-        Matrix lu = new Matrix(decomp.decomposeOnLU(matrix));
+        Decomposer decomposer = new Decomposer();
+        Matrix lu = new Matrix(decomposer.decomposeOnLU(matrix));
         Matrix invertedMatrix = new Matrix(n, n);
         double[] tmp = new double[n];
         double[] x = new double[n];
         int[] b = new int[n];
+        double s = 0;
+
+        // identity matrix column
         for (int k = 0; k < n; ++k) {
             if (k != 0)
                 b[k - 1] = 0;
@@ -24,7 +28,6 @@ public class Inverter {
                 }
             }
 
-            double s = 0;
             // U*x=tmp
             for (int i = n - 1; i >= 0; --i) {
                 for (int j = n - 1; j > i; --j) {
@@ -34,6 +37,7 @@ public class Inverter {
                 s = 0;
             }
 
+            // adding a ready column to the inverse matrix
             for (int i = 0; i < n; ++i) {
                 invertedMatrix.setElement(i, k, x[i]);
             }

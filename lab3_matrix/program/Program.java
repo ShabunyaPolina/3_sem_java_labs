@@ -1,30 +1,31 @@
 package lab.program;
 
+import lab.action.Multiplicator;
 import lab.entity.Matrix;
+import lab.creator.MatrixCreator;
 import lab.action.Decomposer;
 import lab.action.Inverter;
 
+import java.io.File;
+
 public class Program {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         Matrix m = new Matrix(3, 3);
 
-        m.setElement(0, 0, 1);
-        m.setElement(0, 1, 2);
-        m.setElement(0, 2, 3);
-        m.setElement(1, 0, 2);
-        m.setElement(1, 1, 5);
-        m.setElement(1, 2, 4);
-        m.setElement(2, 0, 3);
-        m.setElement(2, 1, 6);
-        m.setElement(2, 2, 10);
+        MatrixCreator mc = new MatrixCreator();
+        mc.createFromFile(m, new File("data.txt"));
 
-        System.out.println(m.toString());
+        System.out.println("Matrix:\n" + m);
 
         Decomposer d = new Decomposer();
-        System.out.println(d.decomposeOnLU(m).toString());
+        System.out.println("LU-decomposition:\n" + d.decomposeOnLU(m));
 
         Inverter inv = new Inverter();
-        inv.invertMatrix(m);
-        System.out.println(inv.invertMatrix(m));
+        Matrix inverseMatrix = inv.invertMatrix(m);
+        System.out.println("Inverse matrix:\n" + inverseMatrix);
+
+        Multiplicator productMatrix = new Multiplicator();
+        System.out.println("Check:\n" + m + "(*)\n" + inverseMatrix +
+                "(=)\n" + productMatrix.multiply(m, inverseMatrix));
     }
 }
