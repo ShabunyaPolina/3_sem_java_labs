@@ -5,6 +5,8 @@ public class TreeNode<T> {
     private TreeNode<T> leftChild;
     private TreeNode<T> rightChild;
 
+    public TreeNode() {}
+
     public TreeNode(T value) {
         this.value = value;
     }
