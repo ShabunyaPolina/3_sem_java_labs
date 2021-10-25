@@ -19,6 +19,7 @@ public class BinaryTree<T extends Comparable<T>> {
         return root;
     }
 
+    // нерекурсивная вставка
     public void insert(T value) {
         TreeNode<T> newNode = new TreeNode<>(value);
         if (root == null)
@@ -46,9 +47,28 @@ public class BinaryTree<T extends Comparable<T>> {
         }
     }
 
-    public TreeNode<T> find(T value) {
+    // рекурсивная вставка
+    public void insertR(T value) {
+        root = insertR(root, value);
+    }
+
+    private TreeNode<T> insertR(TreeNode<T> node, T value) {
+        if (node == null) {
+            return new TreeNode<T>(value);
+        }
+        else {
+            int cmp = value.compareTo(node.getValue());
+            if (cmp < 0)
+                node.setLeftChild(insertR(node.getLeftChild(), value));
+            else
+                node.setRightChild(insertR(node.getRightChild(), value));
+        }
+        return node;
+    }
+
+    public boolean find(T value) {
         if (root == null)
-            return null;
+            return false;
         TreeNode<T> current = root;
         while (current.getValue() != value) {
             int cmp = value.compareTo(current.getValue());
@@ -57,12 +77,16 @@ public class BinaryTree<T extends Comparable<T>> {
             else
                 current = current.getRightChild();
             if (current == null)
-                return null;
+                return false;
         }
-        return current;
+        return true;
     }
 
-    public void prefixTraverse(TreeNode<T> node) {  // root-left-right
+    public void prefixTraverse() {
+        prefixTraverse(root);
+    }
+
+    private void prefixTraverse(TreeNode<T> node) {  // root-left-right
         if (node != null) {
             System.out.print(node.getValue() + " ");
             prefixTraverse(node.getLeftChild());
@@ -70,7 +94,11 @@ public class BinaryTree<T extends Comparable<T>> {
         }
     }
 
-    public void postfixTraverse(TreeNode<T> node) {  // left-right-root
+    public void postfixTraverse() {
+        postfixTraverse(root);
+    }
+
+    private void postfixTraverse(TreeNode<T> node) {  // left-right-root
         if (node != null) {
             postfixTraverse(node.getLeftChild());
             postfixTraverse(node.getRightChild());
@@ -78,7 +106,11 @@ public class BinaryTree<T extends Comparable<T>> {
         }
     }
 
-    public void infixTraverse(TreeNode<T> node) {  // left-root-right
+    public void infixTraverse() {
+        infixTraverse(root);
+    }
+
+    private void infixTraverse(TreeNode<T> node) {  // left-root-right
         if (node != null) {
             infixTraverse(node.getLeftChild());
             System.out.print(node.getValue() + " ");

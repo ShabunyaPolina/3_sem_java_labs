@@ -5,7 +5,8 @@ public class Book implements Comparable<Book> {
     private String author;
     private int pagesNumber;
 
-    public Book() {}
+    public Book() {
+    }
 
     public Book(String name, String author, int pagesNumber) {
         this.name = name;
@@ -48,6 +49,10 @@ public class Book implements Comparable<Book> {
 
     @Override
     public int compareTo(Book book) {
-        return Integer.compare(pagesNumber, book.pagesNumber);
+        int cmp = Integer.compare(pagesNumber, book.pagesNumber);
+        if (cmp != 0) return cmp;
+        else {
+            return name.compareTo(book.name);
+        }
     }
 }

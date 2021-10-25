@@ -1,59 +1,71 @@
 package program;
 
-import node.TreeNode;
 import structure.BinaryTree;
 import customclass.Book;
 
 public class TreeApp {
     public static void main(String[] args) {
-//        TreeNode<Integer> node1 = new TreeNode<>();
-//        node1.setValue(5);
-//        System.out.println(node1);
-//        System.out.println(node1.getValue());
-//        TreeNode<Integer> node2 = new TreeNode<>();
-//        node2.setValue(2);
-//        node1.setLeftChild(node2);
-//        System.out.println(node2);
-////        System.out.println(node1);
-//
-//        BinaryTree<Integer> tree = new BinaryTree<>();
-//        tree.insert(50);
-//        System.out.println(tree);
-//        tree.insert(4);
-//        System.out.println(tree);
-//        tree.insert(30);
-//        System.out.println(tree);
-//        tree.insert(100);
-//        System.out.println(tree);
-//
-//        System.out.println(tree.find(4));
-//        System.out.println(tree.find(2));
-//
-//        tree.infixTraverse(tree.getRoot());
-//        System.out.println();
-//        tree.prefixTraverse(tree.getRoot());
-//        System.out.println();
-//        tree.postfixTraverse(tree.getRoot());
-//
-//        tree.displayTree();
+
+        BinaryTree<Integer> integerTree = new BinaryTree<>();
+        integerTree.insert(50);
+        integerTree.insert(4);
+        integerTree.insert(30);
+        integerTree.insert(100);
+        integerTree.insert(0);
+        integerTree.insert(-48);
+        integerTree.insert(12);
+        integerTree.insert(765);
+
+//        integerTree.insertR(50);
+//        integerTree.insertR(4);
+//        integerTree.insertR(30);
+//        integerTree.insertR(100);
+//        integerTree.insertR(0);
+//        integerTree.insertR(-48);
+//        integerTree.insertR(12);
+//        integerTree.insertR(765);
+
+
+        integerTree.displayTree();
+
+        System.out.println(integerTree.find(100));
+        System.out.println(integerTree.find(2));
+
+        System.out.println("root->left->right");
+        integerTree.infixTraverse();
+        System.out.println("\nleft->right->root");
+        integerTree.prefixTraverse();
+        System.out.println("\nleft->root->right");
+        integerTree.postfixTraverse();
+        System.out.println();
+
+        //--------------------------------------------------------------------------
 
         Book book1 = new Book("a", "h", 123);
-        System.out.println(book1);
         Book book2 = new Book("b", "r", 54);
-        System.out.println(book2);
         Book book3 = new Book("c", "q", 90);
-        System.out.println(book3);
         Book book4 = new Book("d", "z", 66);
-        System.out.println(book4);
+        Book book5 = new Book("q", "v", 66);
+        Book book6 = new Book("h", "p", 66);
 
-        BinaryTree<Book> tree = new BinaryTree<>();
-        tree.insert(book1);
-        tree.insert(book2);
-        tree.insert(book3);
-        tree.insert(book4);
+        BinaryTree<Book> bookTree = new BinaryTree<>();
+        bookTree.insert(book1);
+        bookTree.insert(book2);
+        bookTree.insert(book3);
+        bookTree.insert(book4);
+        bookTree.insert(book5);
 
-        System.out.println(tree);
+        bookTree.displayTree();
 
-        tree.displayTree();
+        System.out.println(bookTree.find(book5));
+        System.out.println(bookTree.find(book6));
+
+        System.out.println("root->left->right");
+        bookTree.infixTraverse();
+        System.out.println("\nleft->right->root");
+        bookTree.prefixTraverse();
+        System.out.println("\nleft->root->right");
+        bookTree.postfixTraverse();
+        System.out.println();
     }
 }
