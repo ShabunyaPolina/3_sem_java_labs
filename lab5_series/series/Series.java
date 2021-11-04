@@ -1,19 +1,40 @@
 package by.bsu.shabunya.lab5.series;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
 
 public abstract class Series {
+    private double firstElement;
+    private double factor;
     private int numberOfElements;
-    private final double firstElement;
 
-    public Series(double firstElement) {
+    public Series(){};
+
+    public Series(double firstElement, double factor) {
         this.firstElement = firstElement;
+        this.factor = factor;
+    }
+
+    public Series(double firstElement, double factor, int numberOfElements) {
+        this.firstElement = firstElement;
+        this.factor = factor;
+        this.numberOfElements = numberOfElements;
     }
 
     public double getFirstElement() {
         return firstElement;
+    }
+
+    public void setFirstElement(double firstElement) {
+        this.firstElement = firstElement;
+    }
+
+    public double getFactor() {
+        return factor;
+    }
+
+    public void setFactor(double factor) {
+        this.factor = factor;
     }
 
     public int getNumberOfElements() {
@@ -26,9 +47,9 @@ public abstract class Series {
 
     public abstract double calculateElement(int j);
 
-    public double calculateSum(){
+    public double calculateSum() {
         double sum = firstElement;
-        for(int i = 2; i <= numberOfElements; ++i) {
+        for (int i = 2; i <= numberOfElements; ++i) {
             sum += calculateElement(i);
         }
         return sum;
@@ -37,22 +58,19 @@ public abstract class Series {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for(int i = 1; i <= numberOfElements; ++i) {
+        for (int i = 1; i <= numberOfElements; ++i) {
             sb.append(String.format("%.2f", calculateElement(i))).append("  ");
         }
         return sb.toString();
     }
 
-    public void saveToFile(String fileName, String comment) {
-        try(PrintWriter pw = new PrintWriter(new File(fileName))) {
-            pw.print(comment + '\n');
-            for(int i = 1; i <= numberOfElements; ++i) {
-                pw.print(String.format("%.2f", calculateElement(i)) + "   ");
-            }
-            pw.print("\nSum: " + calculateSum());
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+    public void saveToFile(String fileName, String comment) throws IOException {
+        PrintWriter pw = new PrintWriter(fileName);
+        pw.print(comment + '\n');
+        for (int i = 1; i <= numberOfElements; ++i) {
+            pw.print(String.format("%.2f", calculateElement(i)) + "   ");
         }
+        pw.print("\nSum: " + calculateSum());
     }
 }
 

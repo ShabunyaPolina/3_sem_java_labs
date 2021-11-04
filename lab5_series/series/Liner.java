@@ -1,23 +1,19 @@
 package by.bsu.shabunya.lab5.series;
 
 public class Liner extends Series{
-    private double difference;
+
+    public Liner(){};
 
     public Liner(double firstElement, double difference) {
-        super(firstElement);
-        this.difference = difference;
+        super(firstElement, difference);
     }
 
-    public double getDifference() {
-        return difference;
-    }
-
-    public void setDifference(double difference) {
-        this.difference = difference;
+    public Liner(double firstElement, double difference, int numberOfElements) {
+        super(firstElement, difference, numberOfElements);
     }
 
     @Override
     public double calculateElement(int j) {
-        return getFirstElement() + difference * (j - 1);
+        return getFirstElement() + getFactor() * (j - 1);
     }
 }

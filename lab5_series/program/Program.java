@@ -1,14 +1,21 @@
 package by.bsu.shabunya.lab5.program;
 
 import by.bsu.shabunya.lab5.series.*;
+import by.bsu.shabunya.lab5.GUI.ProgGUI;
+
+import java.io.IOException;
 
 public class Program {
 
     public static void main(String[] args) {
+        //-----swing GUI-----
+        new ProgGUI();
+
+        //-----console-----
         // arithmetic progression
         Liner l = new Liner(1.1, 3.2);
         System.out.println("Arithmetic progression: \nFirst element:   " +
-                l.getFirstElement() + "\nDifference:   " + l.getDifference());
+                l.getFirstElement() + "\nDifference:   " + l.getFactor());
 
         int j = 3;
         System.out.println("Element № " + j + " :   " + l.calculateElement(j));
@@ -24,7 +31,7 @@ public class Program {
         // geometric progression
         Exponential e = new Exponential(2, 10);
         System.out.println("Geometric progression: \nFirst element:   " +
-                e.getFirstElement() + "\nRatio:   " + e.getRatio());
+                e.getFirstElement() + "\nRatio:   " + e.getFactor());
 
         System.out.println("Element № " + j + " :   " + e.calculateElement(j));
 
@@ -35,7 +42,11 @@ public class Program {
                 " elements:   " + e.calculateSum());
 
         // Save to file
-        l.saveToFile("liner.txt", "Arithmetic progression");
-        e.saveToFile("Exponential.txt", "Geometric progression");
+        try {
+            l.saveToFile("liner.txt", "Arithmetic progression");
+            e.saveToFile("Exponential.txt", "Geometric progression");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 }

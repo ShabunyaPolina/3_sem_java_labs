@@ -1,23 +1,19 @@
 package by.bsu.shabunya.lab5.series;
 
 public class Exponential extends Series{
-    private double ratio;
+
+    public Exponential(){};
 
     public Exponential(double firstElement, double ratio) {
-        super(firstElement);
-        this.ratio = ratio;
+        super(firstElement, ratio);
     }
 
-    public double getRatio() {
-        return ratio;
-    }
-
-    public void setRatio(double ratio) {
-        this.ratio = ratio;
+    public Exponential(double firstElement, double ratio, int numberOfElements) {
+        super(firstElement, ratio, numberOfElements);
     }
 
     @Override
     public double calculateElement(int j) {
-        return getFirstElement() * Math.pow(ratio, j - 1);
+        return getFirstElement() * Math.pow(getFactor(), j - 1);
     }
 }
