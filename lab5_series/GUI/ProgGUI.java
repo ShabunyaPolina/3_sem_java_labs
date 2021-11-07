@@ -3,84 +3,146 @@ package by.bsu.shabunya.lab5.GUI;
 import by.bsu.shabunya.lab5.series.*;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.io.IOException;
 
 public class ProgGUI extends JFrame {
-    Series series;
+    private Series series;
+
+    private final Container container = getContentPane();
+
+    private final JRadioButton radioButLiner = new JRadioButton("Liner");
+    private final JRadioButton radioButExp = new JRadioButton("Exponential");
+    private final JTextField firstElemField = new JTextField("0");
+    private final JTextField factorField = new JTextField("0");
+    private final JTextField numberOfElemsField = new JTextField("0");
+    private final JButton showButton = new JButton("Show");
+    private final JButton saveButton = new JButton("Save");
+    private final JLabel sumLabel = new JLabel("Sum: ");
+    private final JEditorPane dataPanel = new JEditorPane();
 
     public ProgGUI() {
-        JFrame frame = new JFrame("Series");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        frame.setLocation(700,400);
-        frame.setSize(500,400);
-
-        Container container = frame.getContentPane();
+        super("Series");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(700, 400, 500, 400);
         container.setBackground(new Color(255, 224, 213));
+        fillWindow();
+        addActions();
+        setVisible(true);
+    }
 
+    private void fillWindow() {
         container.setLayout(new FlowLayout(FlowLayout.CENTER, 100, 10));
 
         // radio buttons
-        JPanel jp1 = new JPanel(new GridLayout(0, 1));
-        jp1.setBorder(BorderFactory.createTitledBorder("Type"));
-        jp1.setPreferredSize(new Dimension(200,80));
-        ButtonGroup bg1 = new ButtonGroup();
-        JRadioButton radioButton1 = new JRadioButton("Liner");
-        bg1.add(radioButton1);
-        jp1.add(radioButton1);
-        radioButton1.addActionListener(actionEvent -> { series = new Liner(); });
-        JRadioButton radioButton2 = new JRadioButton("Exponential");
-        bg1.add(radioButton2);
-        jp1.add(radioButton2);
-        radioButton2.addActionListener(actionEvent -> { series = new Exponential(); });
-        container.add(jp1);
+        JPanel radioButPanel = new JPanel(new GridLayout(0, 1));
+        radioButPanel.setBorder(BorderFactory.createTitledBorder("Type"));
+        ButtonGroup butGroup = new ButtonGroup();
+        butGroup.add(radioButLiner);
+        radioButPanel.add(radioButLiner);
+        butGroup.add(radioButExp);
+        radioButPanel.add(radioButExp);
+        container.add(radioButPanel);
 
-        // text fields for data
-        JPanel jp2 = new JPanel(new GridLayout(3, 2));
-        jp2.setBorder(BorderFactory.createTitledBorder("Features"));
-        jp2.setPreferredSize(new Dimension(350,100));
-        JTextField tf1 = new JTextField("0");
-        JTextField tf2 = new JTextField("0");
-        JTextField tf3 = new JTextField("0");
-        jp2.add(new JLabel("First element: "));
-        jp2.add(tf1);
-        jp2.add(new JLabel("Factor: "));
-        jp2.add(tf2);
-        jp2.add(new JLabel("Number of elements: "));
-        jp2.add(tf3);
-        container.add(jp2);
+        // text fields
+        JPanel textFieldsPanel = new JPanel(new GridLayout(3, 2));
+        textFieldsPanel.setBorder(BorderFactory.createTitledBorder("Features"));
+        textFieldsPanel.add(new JLabel("First element: "));
+        textFieldsPanel.add(firstElemField);
+        textFieldsPanel.add(new JLabel("Factor: "));
+        textFieldsPanel.add(factorField);
+        textFieldsPanel.add(new JLabel("Number of elements: "));
+        textFieldsPanel.add(numberOfElemsField);
+        container.add(textFieldsPanel);
 
-        // button to show series
-        JButton button = new JButton("Show");
-        container.add(button);
-        JEditorPane ep1 = new JEditorPane();
-        JLabel l = new JLabel("Sum: ");
-        container.add(l);
-        ep1.setPreferredSize(new Dimension(400,60));
-        ep1.setEditable(false);
-        container.add(new JScrollPane(ep1));
-        button.addActionListener(actionEvent -> {
-            series.setFirstElement(Double.parseDouble(tf1.getText()));
-            series.setFactor(Double.parseDouble(tf2.getText()));
-            series.setNumberOfElements(Integer.parseInt(tf3.getText()));
-            ep1.setText(series.toString());
-            l.setText("Sum: " + series.calculateSum());
+        // show button
+        container.add(showButton);
+        container.add(sumLabel);
+        dataPanel.setEditable(false);
+        JScrollPane scrollPane = new JScrollPane(dataPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.setPreferredSize(new Dimension(400, 100));
+        container.add(scrollPane);
+
+        // save button
+        container.add(saveButton);
+    }
+
+    private void addActions() {
+        radioButLiner.addActionListener(actionEvent -> {
+            series = new Liner();
+        });
+        radioButExp.addActionListener(actionEvent -> {
+            series = new Exponential();
         });
 
-        // button to save data to file
-        JButton button2 = new JButton("Save");
-        container.add(button2);
-        button2.addActionListener(actionEvent -> {
+        firstElemField.addFocusListener(new TextFieldsFocusListener(firstElemField));
+        factorField.addFocusListener(new TextFieldsFocusListener(factorField));
+        numberOfElemsField.addFocusListener(new TextFieldsFocusListener(numberOfElemsField));
+
+        showButton.addActionListener(actionEvent -> {
+            if (!radioButLiner.isSelected() && !radioButExp.isSelected()) {
+                showDialogException("Select the type of series");
+                return;
+            }
             try {
-                series.saveToFile("series.txt", "g");
-            } catch (IOException e) {
-                e.printStackTrace();
+                series.setFirstElement(Double.parseDouble(firstElemField.getText()));
+                series.setFactor(Double.parseDouble(factorField.getText()));
+                series.setNumberOfElements(Integer.parseInt(numberOfElemsField.getText()));
+            } catch (NumberFormatException e) {
+                showDialogException("Incorrect entered data");
+            }
+            dataPanel.setText(series.toString());
+            sumLabel.setText("Sum: " + series.calculateSum());
+        });
+
+        saveButton.addActionListener(actionEvent -> {
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setFileFilter(new FileNameExtensionFilter("*.txt", "*.*"));
+            if (series == null) {
+                showDialogException("Insufficient series data");
+                return;
+            }
+            if (fileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+                try {
+                    series.saveToFile(fileChooser.getSelectedFile().toString(), "Progression:");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
+    }
 
-        frame.setVisible(true);
+    private void showDialogException(String message) {
+        JOptionPane.showMessageDialog(this, message);
+    }
+
+    private class TextFieldsFocusListener implements FocusListener {
+        private final JTextField textField;
+
+        public TextFieldsFocusListener(JTextField textField) {
+            this.textField = textField;
+        }
+
+        @Override
+        public void focusGained(FocusEvent focusEvent) {
+        }
+
+        @Override
+        public void focusLost(FocusEvent focusEvent) {
+            try {
+                if (textField.equals(firstElemField))
+                    series.setFirstElement(Double.parseDouble(firstElemField.getText()));
+                else if (textField.equals(factorField))
+                    series.setFactor(Double.parseDouble(factorField.getText()));
+                else
+                    series.setNumberOfElements(Integer.parseInt(numberOfElemsField.getText()));
+            } catch (NumberFormatException e) {
+                showDialogException("Incorrect entered data");
+            }
+        }
     }
 }
