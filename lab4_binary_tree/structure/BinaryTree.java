@@ -51,7 +51,6 @@ public class BinaryTree<T extends Comparable<T>> {
     public void insertR(T value) {
         root = insertR(root, value);
     }
-
     private TreeNode<T> insertR(TreeNode<T> node, T value) {
         if (node == null) {
             return new TreeNode<T>(value);

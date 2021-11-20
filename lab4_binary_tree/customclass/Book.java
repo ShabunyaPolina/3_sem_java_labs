@@ -40,10 +40,9 @@ public class Book implements Comparable<Book> {
 
     @Override
     public String toString() {
-        return "[" +
-                "name: " + name +
-                ", author: " + author +
-                ", number of pages: " + pagesNumber +
+        return "[" + name +
+                ", " + author +
+                ", " + pagesNumber +
                 "]";
     }
 

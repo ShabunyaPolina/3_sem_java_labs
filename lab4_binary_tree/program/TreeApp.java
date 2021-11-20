@@ -2,6 +2,7 @@ package program;
 
 import structure.BinaryTree;
 import customclass.Book;
+import visitor.*;
 
 public class TreeApp {
     public static void main(String[] args) {
@@ -25,18 +26,37 @@ public class TreeApp {
 //        integerTree.insertR(12);
 //        integerTree.insertR(765);
 
-
         integerTree.displayTree();
 
         System.out.println(integerTree.find(100));
         System.out.println(integerTree.find(2));
 
-        System.out.println("root->left->right");
+
+        TreeVisitor<Integer> intVisitor;
+
+        System.out.println("left->root->right");
         integerTree.infixTraverse();
-        System.out.println("\nleft->right->root");
+        System.out.println();
+        // visitor traverse
+        intVisitor = new InfixTraverseVisitor<>();
+        intVisitor.visit(integerTree);
+        System.out.println(intVisitor.getTreeString() + "(visitor)");
+
+        System.out.println("\nroot-left-right");
         integerTree.prefixTraverse();
-        System.out.println("\nleft->root->right");
+        System.out.println();
+        // visitor traverse
+        intVisitor = new PrefixTraverseVisitor<>();
+        intVisitor.visit(integerTree);
+        System.out.println(intVisitor.getTreeString() + "(visitor)");
+
+        System.out.println("\nleft->right->root");
         integerTree.postfixTraverse();
+        System.out.println();
+        // visitor traverse
+        intVisitor = new PostfixTraverseVisitor<>();
+        intVisitor.visit(integerTree);
+        System.out.println(intVisitor.getTreeString() + "(visitor)");
         System.out.println();
 
         //--------------------------------------------------------------------------
@@ -60,12 +80,31 @@ public class TreeApp {
         System.out.println(bookTree.find(book5));
         System.out.println(bookTree.find(book6));
 
-        System.out.println("root->left->right");
+
+        TreeVisitor<Book> bookVisitor;
+
+        System.out.println("left->root->right");
         bookTree.infixTraverse();
-        System.out.println("\nleft->right->root");
+        System.out.println();
+        // visitor traverse
+        bookVisitor = new InfixTraverseVisitor<>();
+        bookVisitor.visit(bookTree);
+        System.out.println(bookVisitor.getTreeString() + "(visitor)");
+
+        System.out.println("\nroot->left->right");
         bookTree.prefixTraverse();
-        System.out.println("\nleft->root->right");
+        System.out.println();
+        // visitor traverse
+        bookVisitor = new PrefixTraverseVisitor<>();
+        bookVisitor.visit(bookTree);
+        System.out.println(bookVisitor.getTreeString() + "(visitor)");
+
+        System.out.println("\nleft->right->root");
         bookTree.postfixTraverse();
         System.out.println();
+        // visitor traverse
+        bookVisitor = new PostfixTraverseVisitor<>();
+        bookVisitor.visit(bookTree);
+        System.out.println(bookVisitor.getTreeString() + "(visitor)");
     }
 }
