@@ -18,7 +18,7 @@ public class AppWindow {
     private final JFrame mainFrame = new JFrame("");
     private final Container contentPane = mainFrame.getContentPane();
 
-    private final DrawPanel drawPanel = new DrawPanel(1000,1000);
+    private final DrawPanel drawPanel;
     private final JSlider slider = new JSlider();
     private final JButton colorBut = new JButton("выбрать цвет");
     private final JButton saveBut = new JButton("сохранить");
@@ -30,6 +30,8 @@ public class AppWindow {
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         mainFrame.setLocation((dim.width - mainFrame.getWidth()) / 2,
                 (dim.height - mainFrame.getHeight()) / 2);
+
+        drawPanel = new DrawPanel(width,height);
 
         fillWindow();
         addActions();
@@ -66,7 +68,7 @@ public class AppWindow {
         toolsPanel.add(buttonsPanel);
 
         // drawing panel
-        contentPane.add(new JScrollPane(drawPanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+        contentPane.add(new JScrollPane(drawPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED));
     }
 

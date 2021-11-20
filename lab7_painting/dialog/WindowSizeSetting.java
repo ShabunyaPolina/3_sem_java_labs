@@ -12,8 +12,8 @@ public class WindowSizeSetting {
 
     private final JFrame mainFrame = new JFrame();
     private final Container mainPanel = mainFrame.getContentPane();
-    private final JTextField drawAreaWidth = new JTextField("1000");
-    private final JTextField drawAreaHeight = new JTextField("1000");
+    private final JTextField drawAreaWidth = new JTextField("");
+    private final JTextField drawAreaHeight = new JTextField("");
     private final JButton setSizeBut = new JButton("создать");
 
     public WindowSizeSetting() {
