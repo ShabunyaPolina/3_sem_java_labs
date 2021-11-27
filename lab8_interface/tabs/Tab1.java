@@ -33,15 +33,15 @@ public class Tab1 extends JPanel {
 
         setLayout(new BorderLayout());
 
-        add(list1, BorderLayout.WEST);
-        add(buttonsPanel);
-        add(list2, BorderLayout.EAST);
-
         fillTab();
         addActions();
     }
 
     private void fillTab() {
+        add(list1, BorderLayout.WEST);
+        add(buttonsPanel);
+        add(list2, BorderLayout.EAST);
+
         Dimension d = new Dimension(width * 2 / 5, height);
         list1.setPreferredSize(d);
         list2.setPreferredSize(d);
