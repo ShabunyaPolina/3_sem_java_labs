@@ -6,21 +6,21 @@ import java.util.ArrayList;
 
 public class ToyIteratorOverAgeLimit extends ToyIterator {
 
-    private int lowerBound;
-    private int upperBound;
+    private int lowerAgeBound;
+    private int upperAgeBound;
 
-    public ToyIteratorOverAgeLimit(ArrayList<Toy> arr,
+    public ToyIteratorOverAgeLimit(ArrayList<Toy> list,
                                    int lowerBound, int upperBound) {
-        super(arr);
-        this.lowerBound = lowerBound;
-        this.upperBound = upperBound;
+        super(list);
+        this.lowerAgeBound = lowerBound;
+        this.upperAgeBound = upperBound;
     }
 
     @Override
     public boolean hasNext() {
         return current != toys.size() - 1 &&
-                toys.get(current + 1).getAgeLimit().getLowerBound() >= lowerBound &&
-                toys.get(current + 1).getAgeLimit().getUpperBound() <= upperBound;
+                toys.get(current + 1).getAgeLimit().getLowerBound() >= lowerAgeBound &&
+                toys.get(current + 1).getAgeLimit().getUpperBound() <= upperAgeBound;
     }
 
     @Override
@@ -33,19 +33,19 @@ public class ToyIteratorOverAgeLimit extends ToyIterator {
             throw new ArrayIndexOutOfBoundsException();
     }
 
-    public int getLowerBound() {
-        return lowerBound;
+    public int getLowerAgeBound() {
+        return lowerAgeBound;
     }
 
-    public void setLowerBound(int lowerBound) {
-        this.lowerBound = lowerBound;
+    public void setLowerAgeBound(int lowerAgeBound) {
+        this.lowerAgeBound = lowerAgeBound;
     }
 
-    public int getUpperBound() {
-        return upperBound;
+    public int getUpperAgeBound() {
+        return upperAgeBound;
     }
 
-    public void setUpperBound(int upperBound) {
-        this.upperBound = upperBound;
+    public void setUpperAgeBound(int upperAgeBound) {
+        this.upperAgeBound = upperAgeBound;
     }
 }

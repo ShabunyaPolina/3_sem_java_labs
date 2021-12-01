@@ -1,6 +1,7 @@
 package by.bsu.shabunya.lab9.toy;
 
 public class Toy {
+
     private String name;
     private int price;
     private AgeLimit ageLimit;
@@ -37,7 +38,7 @@ public class Toy {
 
     @Override
     public String toString() {
-        return name + ": price = " + price +
-                ", ageLimit-" + ageLimit;
+        return name + ":     price = " + price +
+                ",     ageLimit - " + ageLimit;
     }
 }

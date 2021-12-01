@@ -10,8 +10,8 @@ public abstract class ToyIterator implements Iterator<Toy> {
     protected ArrayList<Toy> toys;
     protected int current;
 
-    public ToyIterator(ArrayList<Toy> arr) {
-        toys = arr;
+    public ToyIterator(ArrayList<Toy> toys) {
+        this.toys = toys;
         current = -1;
     }
 

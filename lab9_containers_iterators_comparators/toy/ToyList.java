@@ -14,10 +14,19 @@ public class ToyList extends ArrayList<Toy> {
 
     public ToyList getToysLimitedByAge(int lowerBound, int upperBound) {
         ToyList toys = new ToyList();
-        Iterator<Toy> iter = new ToyIteratorOverAgeLimit(this, 0, 5);
-        while (iter.hasNext()) {
-            toys.add(iter.next());
+        Iterator<Toy> iterator = new ToyIteratorOverAgeLimit(this, lowerBound, upperBound);
+        while (iterator.hasNext()) {
+            toys.add(iterator.next());
         }
         return toys;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for(Toy toy : this) {
+            stringBuilder.append(toy).append(";\n");
+        }
+        return stringBuilder.toString();
     }
 }

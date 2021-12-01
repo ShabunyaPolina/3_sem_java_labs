@@ -1,6 +1,7 @@
 package by.bsu.shabunya.lab9.toy;
 
 public class AgeLimit {
+
     private int lowerBound;
     private int upperBound;
 

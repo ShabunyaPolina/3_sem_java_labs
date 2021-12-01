@@ -1,34 +1,30 @@
 package by.bsu.shabunya.lab9.program;
 
-import by.bsu.shabunya.lab9.comparator.ToyComparatorByPrice;
-import by.bsu.shabunya.lab9.iterator.ToyIteratorOverAgeLimit;
-import by.bsu.shabunya.lab9.toy.Toy;
 import by.bsu.shabunya.lab9.toy.ToyList;
-import by.bsu.shabunya.lab9.workwithfiles.Reader;
-
-import java.util.ArrayList;
-import java.util.Iterator;
+import by.bsu.shabunya.lab9.window.AppFrame;
+import by.bsu.shabunya.lab9.workwithfile.Reader;
 
 public class Program {
     public static void main(String[] args) {
 
+        // read data from file
         Reader reader = new Reader();
-        ToyList toys = reader.read("data.txt");
-        System.out.println(toys);
+        String fileName = "data.txt";
+        ToyList toys = reader.read(fileName);
+        System.out.println("Toys (initial list):\n" + toys);
 
+        // sort list by price
         toys.sortByPrice();
-        System.out.println(toys);
+        System.out.println("Toys sorted by price:\n" + toys);
 
-        System.out.println(toys.getToysLimitedByAge(0,5));
+        // Toys from the age range
+        int lowerBound = 0;
+        int upperBound = 10;
+        ToyList ageLimitedToys = toys.getToysLimitedByAge(lowerBound, upperBound);
+        System.out.println("Age limited toys (" + lowerBound +
+                ", " + upperBound + ")\n" + ageLimitedToys);
 
-//        toys.sort(new ToyComparatorByPrice());
-//        System.out.println(toys);
-//
-//        ArrayList<Toy> specialToys = new ArrayList<>();
-//        Iterator<Toy> iter = new ToyIteratorOverAgeLimit(toys, 0,5);
-//        while(iter.hasNext()) {
-//            specialToys.add(iter.next());
-//        }
-//        System.out.println(specialToys);
+        // window
+        new AppFrame();
     }
 }

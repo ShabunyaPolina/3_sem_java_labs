@@ -1,4 +1,4 @@
-package by.bsu.shabunya.lab9.workwithfiles;
+package by.bsu.shabunya.lab9.workwithfile;
 
 import by.bsu.shabunya.lab9.exception.ReaderException;
 import by.bsu.shabunya.lab9.toy.Toy;
