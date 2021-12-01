@@ -9,8 +9,8 @@ import java.util.Arrays;
 
 public class Tab1 extends JPanel {
 
-    int width;
-    int height;
+   private final int width;
+   private final int height;
 
     private final String[] data1 = {"cat", "dog", "rat", "camel", "fox"};
     private final String[] data2 = {"bird", "snake", "mouse", "elephant", "rabbit", "turtle"};
